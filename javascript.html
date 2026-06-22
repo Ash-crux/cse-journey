@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Js Practise</title>
+    </head>
+
+    <body>
+            <h1>MY AGE CHECKER</h1>
+            <input id ="ageinput"  type="number"  placeholder="enter your age">
+            <button onclick ="checkAge()">check</button>
+            <p id ="result"></p>
+            
+    
+    <script>
+          function checkAge() {
+            let age = document.getElementById("ageinput").value 
+            age = parseInt(age)
+        
+        if (age >= 18){
+            document.getElementById("result").innerText = "you are an adult!"
+               } else {
+            document.getElementById("result").innerText = "you are a minor!"
+               }       
+          }
+
+        </script>
+
+</body>
+</html>
