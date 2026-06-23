@@ -60,28 +60,48 @@
     <body>
             <h1>My To-Do List</h1>
             <input id="taskinput" type="text" placeholder="Enter a Task...">
-            <button onclick = "addtask()">Add Task</button>
+            <button onclick = "addTask()">Add Task</button>
             <ul id="TaskList"></ul>
             <script>
-                function addtask(){
-                    let tasktext = document.getElementById("taskinput").value
-                    if (tasktext==""){
-                        alert("please enter a task")
-                    return 
-                    }
-                    let li=document.createElement("li")
-                    li.innerText=tasktext
-                    let deletebtn = document.createElement("button")
-                    deletebtn.innerText="Delete"
-                    deletebtn.onclick =function(){
-                        li.remove()
-                    }
-                    li.appendChild(deletebtn)
-                    document.getElementById("TaskList").appendChild(li)
-                    document.getElementById("taskinput").value=""
-                }
+                let tasks = JSON.parse(localStorage.getItem("tasks")) || []
 
-                        
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+}
+
+function renderTasks() {
+    let taskList = document.getElementById("TaskList")
+    taskList.innerHTML = ""
+    for (let i = 0; i < tasks.length; i++) {
+        let li = document.createElement("li")
+        li.innerText = tasks[i]
+        let deleteBtn = document.createElement("button")
+        deleteBtn.innerText = "Delete"
+        deleteBtn.onclick = function() {
+            tasks.splice(i, 1)
+            saveTasks()
+            renderTasks()
+        }
+        li.appendChild(deleteBtn)
+        taskList.appendChild(li)
+    }
+}
+
+function addTask() {
+    let taskText = document.getElementById("taskinput").value
+    if (taskText === "") {
+        alert("Please enter a task!")
+        return
+    }
+    tasks.push(taskText)
+    saveTasks()
+    renderTasks()
+    document.getElementById("taskinput").value = ""
+}
+
+renderTasks()
+                    
+                
                     
                     
 
